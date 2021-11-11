@@ -1,0 +1,24 @@
+name: Prettier Format
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/prettier-format.yml'
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: prettier
+        uses: creyD/prettier_action@v3.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          prettier_options: --write *.{html,js,css,json}
+          commit_message: "format: prettier"
